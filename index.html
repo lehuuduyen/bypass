@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/action_page.php">
+        <label for="files">Select files:</label>
+        <input type="file" id="files" name="files" multiple><br><br>
+        <input type="button" onclick="clickSubmit()" value="click">
+      </form>
+    <script>
+        function clickSubmit(){
+            var files = document.getElementById("files").files;
+      
+            for (var i = 0; i < files.length; i++)
+            {
+                const form = new FormData();
+                // form.append("file", files[i]);
+                const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001',
+                    Authorization: 'Bearer 9aDewX3fToQZJ-CndimnAadMX6N8ScsRzv5W1eDm',
+                    "Accept": "*",
+                    'Access-Control-Allow-Origin': 'https://coffee.getlinktraffic.io.vn/',
+                    'Access-Control-Allow-Credentials' : true,
+                    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+                    'Access-Control-Allow-Headers': 'office',
+                    'Content-Type': 'application/json',
+                    'CF-Access-Client-Id': 'b55f0a4a780ae5eab5ae526c87aaa23f.access',
+                    'CF-Access-Client-Secret': 'e9ee7204328538c1308e53e33b5fb2fc1bf11388d2041011748a526ae0fe3f23'
+                }
+                };
+                options.body = form;
+
+                fetch('https://api.cloudflare.com/client/v4/accounts/dd91b1bab8a1dbbc8c30be8f5ad3a489/images/v1', options)
+                .then(response => response.json())
+                .then(response => console.log(response))
+                .catch(err => console.error(err));
+            }
+        }
+  
+</script>
+</body>
+</html>

@@ -647,8 +647,9 @@ def LaunchSKY(url, timer):
             print('66666666')
             
             # Connect to the server
-            s.connect((str(urlparse(url).netloc), 443))
             s.set_proxy(socks.SOCKS5, str(proxy[0]), int(proxy[1]), True, proxy[2], proxy[3])
+            s.connect((str(urlparse(url).netloc), 443))
+
             print('4444444')
             
             # Create SSL context and wrap the socket
