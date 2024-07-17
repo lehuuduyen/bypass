@@ -537,7 +537,10 @@ def AttackPXCFB(url, until_datetime, scraper):
                 }
              
                 print(requests.get(url, proxies=proxies),proxy_url)
-                # print(scraper.get(url, proxies=proxy),proxy)
+                print(requests.get(url, proxies=proxies),proxy_url)
+                print(requests.get(url, proxies=proxies),proxy_url)
+                print(requests.get(url, proxies=proxies),proxy_url)
+                print(requests.get(url, proxies=proxies),proxy_url)
         except Exception as e:
             print('falid--------------',e)
             pass
