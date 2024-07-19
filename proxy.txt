@@ -1,10 +1,1 @@
-45.127.248.127:5128:xkmmjsed:mwmqyb3d77yq
-207.244.217.165:6712:xkmmjsed:mwmqyb3d77yq
-134.73.69.7:5997:xkmmjsed:mwmqyb3d77yq
-64.64.118.149:6732:xkmmjsed:mwmqyb3d77yq
-157.52.253.244:6204:xkmmjsed:mwmqyb3d77yq
-167.160.180.203:6754:xkmmjsed:mwmqyb3d77yq
-166.88.58.10:5735:xkmmjsed:mwmqyb3d77yq
-173.0.9.70:5653:xkmmjsed:mwmqyb3d77yq
-204.44.69.89:6342:xkmmjsed:mwmqyb3d77yq
-173.0.9.209:5792:xkmmjsed:mwmqyb3d77yq
+103.167.84.140:52492:gjsz1h4n:gJsZ1h4n
