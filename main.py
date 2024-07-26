@@ -561,9 +561,9 @@ def AttackPXCFB(url, until_datetime, scraper):
 
                 proxy = random.choice(proxies).strip().split(":")
                 print(proxy)
-                # proxy_url = f"http://{proxy[0]}:{proxy[1]}"
+                proxy_url = f"http://{proxy[0]}:{proxy[1]}"
                 
-                proxy_url = f"http://{proxy[0]}:{proxy[1]}@{proxy[2]}:{proxy[3]}"
+                # proxy_url = f"http://{proxy[0]}:{proxy[1]}@{proxy[2]}:{proxy[3]}"
                 proxies = {
                 'http': proxy_url,
                 'https': proxy_url,
