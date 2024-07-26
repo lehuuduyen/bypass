@@ -11,6 +11,9 @@ import certifi
 import ssl
 from sys import stdout
 from colorama import Fore, init
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+
 
 def countdown(t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
@@ -583,12 +586,16 @@ def AttackPXCFB(url, until_datetime, scraper):
                 'https': proxy_url,
 
                 }
+                session = requests.Session()
+                retries = Retry(total=5, backoff_factor=1, status_forcelist=[ 500, 502, 503, 504 ])
+                session.mount('http://', HTTPAdapter(max_retries=retries))
+                session.mount('https://', HTTPAdapter(max_retries=retries))
+
                 try:
-                    response = requests.get(url, headers=headers, proxies=proxies, verify=False, timeout=5)  # disable SSL verification to debug
+                    response = session.get(url, headers=headers, proxies=proxies, timeout=10)
                     print(response.status_code, proxy_url)
                 except requests.exceptions.RequestException as e:
                     print(f"Request failed: {e}")
-                
 
                 exit()
                 for _ in range(50):
