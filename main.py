@@ -584,7 +584,7 @@ def AttackPXCFB(url, until_datetime, scraper):
 
                 }
                 try:
-                    response = requests.get(url, headers=headers, proxies=proxies, verify=False)  # disable SSL verification to debug
+                    response = requests.get(url, headers=headers, proxies=proxies, verify=False, timeout=5)  # disable SSL verification to debug
                     print(response.status_code, proxy_url)
                 except requests.exceptions.RequestException as e:
                     print(f"Request failed: {e}")
