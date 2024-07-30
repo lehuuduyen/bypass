@@ -593,9 +593,7 @@ def LaunchPXCFB(url, th, t):
         
 
 def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
-    while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
         try:
-
                 from selenium import webdriver
                 from selenium.webdriver.chrome.service import Service
                 from selenium.webdriver.chrome.options import Options
@@ -633,7 +631,6 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
 
         except Exception as e:
             print('falid--------------',proxy)
-            break
 
 
 #region CFPRO
