@@ -571,7 +571,7 @@ def AttackPXCFB(url, until_datetime, scraper,proxies,th):
                     print('proxy rỗng')
         except Exception as e:
             print('falid--------------',e)
-            pass
+            break
 def LaunchPXCFB(url, th, t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
     scraper = cloudscraper.create_scraper( browser={
