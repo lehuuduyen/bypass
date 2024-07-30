@@ -632,7 +632,7 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
 
 
         except Exception as e:
-            print('falid--------------',e)
+            print('falid--------------',proxy)
             break
 
 
