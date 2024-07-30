@@ -569,7 +569,7 @@ def AttackPXCFB(url, until_datetime, scraper,proxies,th):
 
                 else:
                     print('proxy rỗng')
-        except Exception as e:
+        except ValueError as e:
             print('falid--------------',e)
             break
         
