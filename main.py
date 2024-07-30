@@ -585,7 +585,6 @@ def AttackPXCFB3(url, until_datetime, scraper,proxies,th):
             print(page_title)
     except Exception as e:
         print('falid--------------',e)
-        break
         
 def LaunchPXCFB(url, th, t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
