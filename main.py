@@ -632,7 +632,6 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
                     driver.get(url)
                     # Get the page title
                     page_title = driver.title
-                    print(page_title, '------', proxy)
                     
                     # print(page_source,'------',proxy)
                 # Close the driver
