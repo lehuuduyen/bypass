@@ -4,8 +4,8 @@ from os import system, name
 import os, threading, requests, sys, cloudscraper, datetime, time, socket, socks, ssl, random, httpx
 from urllib.parse import urlparse
 from requests.cookies import RequestsCookieJar
-import undetected_chromedriver as webdriver
-import undetected_chromedriver as uc
+# import undetected_chromedriver as webdriver
+# import undetected_chromedriver as uc
 import urllib.request
 import certifi
 import ssl
@@ -68,7 +68,7 @@ def get_cookie(url):
     global useragent, cookieJAR, cookie
     print(5555557575)
     
-    options = webdriver.ChromeOptions()
+    # options = webdriver.ChromeOptions()
     print(44444444444)
 
     arguments = [
@@ -76,34 +76,34 @@ def get_cookie(url):
     '--disable-notifications', '--disable-gpu', '--headless', '--lang=ko_KR', '--start-maxmized',
     '--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Mobile/14G60 MicroMessenger/6.5.18 NetType/WIFI Language/en' 
     ]
-    for argument in arguments:
-        options.add_argument(argument)
-    print(777777777,options)
+    # for argument in arguments:
+    #     options.add_argument(argument)
+    # print(777777777,options)
     
-    driver = uc.Chrome(options=options)
+    # driver = uc.Chrome(options=options)
     print(8888888)
 
-    driver.implicitly_wait(3)
-    driver.get(url)
+    # driver.implicitly_wait(3)
+    # driver.get(url)
     print(22222222222)
     for _ in range(60):
-        cookies = driver.get_cookies()
+        # cookies = driver.get_cookies()
         tryy = 0
         print(333333333)
 
-        for i in cookies:
-            print(i)
-            if i['name'] == 'cf_clearance':
-                cookieJAR = driver.get_cookies()[tryy]
-                useragent = driver.execute_script("return navigator.userAgent")
-                cookie = f"{cookieJAR['name']}={cookieJAR['value']}"
-                driver.quit()
-                return True
-            else:
-                tryy += 1
-                pass
-        time.sleep(1)
-    driver.quit()
+        # for i in cookies:
+        #     print(i)
+        #     if i['name'] == 'cf_clearance':
+        #         cookieJAR = driver.get_cookies()[tryy]
+        #         useragent = driver.execute_script("return navigator.userAgent")
+        #         cookie = f"{cookieJAR['name']}={cookieJAR['value']}"
+        #         driver.quit()
+        #         return True
+        #     else:
+        #         tryy += 1
+        #         pass
+        # time.sleep(1)
+    # driver.quit()
     print(1111)
     return False
 
