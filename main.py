@@ -562,8 +562,8 @@ def AttackPXCFB(url, until_datetime, scraper,proxies,th):
 
                     }
 
-                    # response = scraper.get(url,headers=headers, proxies=proxies)
-                    response = scraper.get(url,headers=headers)
+                    response = scraper.get(url,headers=headers, proxies=proxies)
+                    # response = scraper.get(url,headers=headers)
                     
                     print(response.status_code,proxy_url)
 
