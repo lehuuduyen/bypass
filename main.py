@@ -589,10 +589,7 @@ def LaunchPXCFB(url, th, t):
                 AttackPXCFB2(url, until, scraper,proxies,th)
                 thd = threading.Thread(target=AttackPXCFB2, args=(url, until, scraper,proxies,th))
                 thd.start()
-                threads.append(thd)
-                # Wait for all threads to complete
-                for thd in threads:
-                    thd.join()
+               
 
             except:
                 print('teo--------------',proxy)
