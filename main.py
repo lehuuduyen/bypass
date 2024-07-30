@@ -628,13 +628,15 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
                     driver.get(url)
                     # Get the page source
                     page_source = driver.title
-                    print(page_source,'------',proxy)
+                    # print(page_source,'------',proxy)
                 # Close the driver
                 driver.quit()
 
 
         except Exception as e:
             print('falid--------------',proxy,e)
+            
+            pass
 
 
 #region CFPRO
