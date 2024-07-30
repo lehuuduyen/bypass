@@ -641,7 +641,11 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
             print('falid--------------',proxy,e)
         finally:
             if driver:
+                print('finally--------------',)
+                
                 driver.quit()    
+            print('finally22222--------------',)
+            
             pass
 
 
