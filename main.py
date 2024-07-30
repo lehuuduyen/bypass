@@ -543,7 +543,7 @@ def AttackCFB(url, until_datetime, scraper):
 
 
 
-def AttackPXCFB(url, until_datetime, scraper,proxies):
+def AttackPXCFB(url, until_datetime, scraper,proxies,th):
     while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
         try:
 
