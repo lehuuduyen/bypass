@@ -565,11 +565,9 @@ def AttackPXCFB(url, until_datetime, scraper,proxy,th):
                     response = scraper.get(url,headers=headers, proxies=proxies)
                     # response = scraper.get(url,headers=headers)
                     if(response.status_code ==200):
-                        soup = BeautifulSoup(response.text, 'html.parser')
-                        # Extract the title
-                        title = soup.title.string
+                        
 
-                        print('Page title:', title , proxy_url)
+                        print('Page title:',  proxy_url)
 
                 else:
                     print('proxy rỗng')
