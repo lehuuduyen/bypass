@@ -588,6 +588,8 @@ def LaunchPXCFB(url, th, t):
                 thd.start()
 
             except:
+                print('teo--------------',proxy)
+
                 pass
         # Start all threads
         
