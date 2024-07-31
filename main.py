@@ -595,8 +595,8 @@ def AttackPXCFB(url, until_datetime, scraper,proxy,th):
                     print(f"Failed to retrieve the webpage. Status code: {response.status_code}")
                 break
         except Exception as e:
-            print('falid--------------',e)
-            pass
+            print(proxy,e)
+            break
         # Start all threads
         
 def LaunchPXCFB3(url, th, t):
