@@ -1287,10 +1287,7 @@ def command():
     elif command == "pxcfb" or command == "PXCFB":
         if get_proxies():
             target, thread, t = get_info_l7()
-            timer = threading.Thread(target=countdown, args=(t,))
-            timer.start()
             LaunchPXCFB(target, thread, t)
-            timer.join()
     elif command == "pxcfb2" or command == "PXCFB2":
         if get_proxies():
             target, thread, t = get_info_l7()
