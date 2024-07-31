@@ -593,7 +593,6 @@ def AttackPXCFB(url, until_datetime, scraper,proxy,th):
                     print(f"Title of the webpage: {title}")
                 else:
                     print(f"Failed to retrieve the webpage. Status code: {response.status_code}")
-                # response = scraper.get(url,headers=headers)
                 break
         except Exception as e:
             print('falid--------------',e)
