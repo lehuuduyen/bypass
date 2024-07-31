@@ -1505,6 +1505,12 @@ if __name__ == '__main__':
             timer.start()
             LaunchPXCFB(target, thread, t)
             timer.join()
+    elif method == "pxcfb2":
+        if get_proxies():
+            LaunchPXCFB2(target, thread, t)
+    elif method == "pxcfb3":
+        if get_proxies():
+            LaunchPXCFB3(target, thread, t)
     elif method == "get":
         timer = threading.Thread(target=countdown, args=(t,))
         timer.start()
