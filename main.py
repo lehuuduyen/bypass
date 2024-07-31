@@ -592,8 +592,8 @@ def AttackPXCFB(url, until_datetime, scraper,proxy,th):
                     title = soup.title.string
                     print(f"Title of the webpage: {title}")
                 else:
-                    print(f"Failed to retrieve the webpage. Status code: {response.status_code}")
-                break
+                    print(f"Failed to retrieve the webpage. Status code: {response.status_code} - Proxy: {proxy}")
+                    break
         except Exception as e:
             print('falid',proxy)
             break
